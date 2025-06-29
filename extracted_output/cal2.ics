@@ -1,0 +1,544 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+CALSCALE:GREGORIAN
+PRODID:-//EQ Curriculum//EN
+
+BEGIN:VTIMEZONE
+TZID:America/New_York
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+TZNAME:EDT
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+TZNAME:EST
+END:STANDARD
+END:VTIMEZONE
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250630T090000
+DTEND;TZID=America/New_York:20250630T093000
+SUMMARY:EQ 9AM: Emotional State Baseline
+DESCRIPTION:Create a detailed emotional inventory. Rate your current mood 1-10 and identify 3 specific emotions you're feeling right now.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250630T163000
+DTEND;TZID=America/New_York:20250630T170000
+SUMMARY:EQ 4:30PM: Trigger Pattern Analysis
+DESCRIPTION:Review your day. What situations triggered strong emotions? Identify patterns in your emotional responses.
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250701T090000
+DTEND;TZID=America/New_York:20250701T093000
+SUMMARY:EQ 9AM: Body Language Awareness
+DESCRIPTION:Set 3 hourly reminders to check your posture, facial expression, and breathing. Note what you discover.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250701T163000
+DTEND;TZID=America/New_York:20250701T170000
+SUMMARY:EQ 4:30PM: Physical-Emotional Connection
+DESCRIPTION:How did your physical state affect your emotions today? What body language changes improved your mood?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250702T090000
+DTEND;TZID=America/New_York:20250702T093000
+SUMMARY:EQ 9AM: Energy Level Tracking
+DESCRIPTION:Rate your energy 1-10 every 2 hours. Note what activities drain vs. energize you.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250702T163000
+DTEND;TZID=America/New_York:20250702T170000
+SUMMARY:EQ 4:30PM: Energy Management Insights
+DESCRIPTION:Which tasks/people gave you energy? Which drained you? Plan tomorrow's schedule accordingly.
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250703T090000
+DTEND;TZID=America/New_York:20250703T093000
+SUMMARY:EQ 9AM: Stress Response Observation
+DESCRIPTION:When you feel stressed today, pause and note: heart rate, breathing, muscle tension, thoughts.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250703T163000
+DTEND;TZID=America/New_York:20250703T170000
+SUMMARY:EQ 4:30PM: Stress Pattern Recognition
+DESCRIPTION:What were your stress triggers? How did your body react? What helped you calm down?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250704T090000
+DTEND;TZID=America/New_York:20250704T093000
+SUMMARY:EQ 9AM: Emotional Vocabulary Expansion
+DESCRIPTION:Instead of "good/bad/fine," use specific emotion words today. Keep a list of new emotional terms you discover.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250704T163000
+DTEND;TZID=America/New_York:20250704T170000
+SUMMARY:EQ 4:30PM: Emotional Precision Review
+DESCRIPTION:How many specific emotion words did you use? How did precise emotional language change your self-awareness?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250707T090000
+DTEND;TZID=America/New_York:20250707T093000
+SUMMARY:EQ 9AM: Negative Thought Logging
+DESCRIPTION:Write down every self-critical thought. Don't judge, just observe and record them as they arise.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250707T163000
+DTEND;TZID=America/New_York:20250707T170000
+SUMMARY:EQ 4:30PM: Thought Pattern Analysis
+DESCRIPTION:Review your negative thoughts. What themes emerged? Which thoughts were most frequent or intense?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250708T090000
+DTEND;TZID=America/New_York:20250708T093000
+SUMMARY:EQ 9AM: Evidence-Based Reframing
+DESCRIPTION:For each negative thought, write 3 pieces of evidence that contradict it. Focus on facts, not feelings.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250708T163000
+DTEND;TZID=America/New_York:20250708T170000
+SUMMARY:EQ 4:30PM: Reframing Effectiveness
+DESCRIPTION:Which reframed thoughts felt most believable? How did challenging negative thoughts affect your mood?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250709T090000
+DTEND;TZID=America/New_York:20250709T093000
+SUMMARY:EQ 9AM: Positive Self-Talk Practice
+DESCRIPTION:Replace "I can't" with "I'm learning to" and "I'm bad at" with "I'm improving at" throughout the day.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250709T163000
+DTEND;TZID=America/New_York:20250709T170000
+SUMMARY:EQ 4:30PM: Language Impact Assessment
+DESCRIPTION:How did changing your internal language affect your confidence and approach to challenges?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250710T090000
+DTEND;TZID=America/New_York:20250710T093000
+SUMMARY:EQ 9AM: Catastrophic Thinking Check
+DESCRIPTION:When worried, ask: "What's the worst that could realistically happen? What's most likely to happen?"
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250710T163000
+DTEND;TZID=America/New_York:20250710T170000
+SUMMARY:EQ 4:30PM: Reality Testing Results
+DESCRIPTION:How often were your worst-case scenarios realistic? What did you learn about your thinking patterns?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250711T090000
+DTEND;TZID=America/New_York:20250711T093000
+SUMMARY:EQ 9AM: Growth Mindset Language
+DESCRIPTION:Add "yet" to limiting statements. "I don't understand this YET." Track how many times you use it.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250711T163000
+DTEND;TZID=America/New_York:20250711T170000
+SUMMARY:EQ 4:30PM: Mindset Shift Evaluation
+DESCRIPTION:How did adding "yet" change your approach to challenges? What felt different about your internal dialogue?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250714T090000
+DTEND;TZID=America/New_York:20250714T093000
+SUMMARY:EQ 9AM: Paraphrasing Practice
+DESCRIPTION:In every conversation, paraphrase what the other person said before responding. "So you're saying..."
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250714T163000
+DTEND;TZID=America/New_York:20250714T170000
+SUMMARY:EQ 4:30PM: Paraphrasing Impact Review
+DESCRIPTION:How did people react to being paraphrased? What did you learn that you might have missed otherwise?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250715T090000
+DTEND;TZID=America/New_York:20250715T093000
+SUMMARY:EQ 9AM: Question-Asking Focus
+DESCRIPTION:Ask at least 3 open-ended questions in each conversation. "What led you to that conclusion?"
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250715T163000
+DTEND;TZID=America/New_York:20250715T170000
+SUMMARY:EQ 4:30PM: Curiosity Impact Assessment
+DESCRIPTION:How did asking more questions change the depth of your conversations? What surprised you?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250716T090000
+DTEND;TZID=America/New_York:20250716T093000
+SUMMARY:EQ 9AM: Nonverbal Listening
+DESCRIPTION:Focus on body language, tone, and facial expressions. What do you notice beyond words?
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250716T163000
+DTEND;TZID=America/New_York:20250716T170000
+SUMMARY:EQ 4:30PM: Nonverbal Insights
+DESCRIPTION:What did people's body language tell you that their words didn't? How accurate were your interpretations?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250717T090000
+DTEND;TZID=America/New_York:20250717T093000
+SUMMARY:EQ 9AM: Interruption Awareness
+DESCRIPTION:Count how many times you interrupt or want to interrupt. Pause and let others finish completely.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250717T163000
+DTEND;TZID=America/New_York:20250717T170000
+SUMMARY:EQ 4:30PM: Patience Practice Results
+DESCRIPTION:How often did you want to interrupt? What did you learn by waiting for others to finish?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250718T090000
+DTEND;TZID=America/New_York:20250718T093000
+SUMMARY:EQ 9AM: Emotional Listening
+DESCRIPTION:Listen for the emotions behind people's words. "You sound frustrated about..." or "I hear excitement in your voice."
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250718T163000
+DTEND;TZID=America/New_York:20250718T170000
+SUMMARY:EQ 4:30PM: Emotional Accuracy Check
+DESCRIPTION:How often did you correctly identify others' emotions? How did acknowledging emotions change conversations?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250721T090000
+DTEND;TZID=America/New_York:20250721T093000
+SUMMARY:EQ 9AM: Genuine Compliment Challenge
+DESCRIPTION:Give 5 specific, genuine compliments today. Focus on effort, skills, or character rather than appearance.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250721T163000
+DTEND;TZID=America/New_York:20250721T170000
+SUMMARY:EQ 4:30PM: Compliment Impact Review
+DESCRIPTION:How did people respond to your compliments? Which ones seemed most meaningful to them?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250722T090000
+DTEND;TZID=America/New_York:20250722T093000
+SUMMARY:EQ 9AM: Enthusiasm Amplification
+DESCRIPTION:Show genuine interest in others' projects/ideas. Ask follow-up questions and express curiosity.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250722T163000
+DTEND;TZID=America/New_York:20250722T170000
+SUMMARY:EQ 4:30PM: Enthusiasm Effect Analysis
+DESCRIPTION:How did showing interest affect others' energy? What did you learn about their passions?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250723T090000
+DTEND;TZID=America/New_York:20250723T093000
+SUMMARY:EQ 9AM: Solution-Focused Language
+DESCRIPTION:Replace complaints with solutions. Instead of "This is broken," say "Here's how we could fix this."
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250723T163000
+DTEND;TZID=America/New_York:20250723T170000
+SUMMARY:EQ 4:30PM: Positivity Shift Results
+DESCRIPTION:How did focusing on solutions change team dynamics? What problems got resolved faster?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250724T090000
+DTEND;TZID=America/New_York:20250724T093000
+SUMMARY:EQ 9AM: Gratitude Expression
+DESCRIPTION:Thank 3 people today for specific things they've done. Be detailed about the impact of their actions.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250724T163000
+DTEND;TZID=America/New_York:20250724T170000
+SUMMARY:EQ 4:30PM: Gratitude Reception Analysis
+DESCRIPTION:How did people respond to your specific thanks? Which expressions of gratitude seemed most impactful?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250725T090000
+DTEND;TZID=America/New_York:20250725T093000
+SUMMARY:EQ 9AM: Energy Matching
+DESCRIPTION:Match others' communication energy levels. If they're excited, show enthusiasm. If they're calm, be measured.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250725T163000
+DTEND;TZID=America/New_York:20250725T170000
+SUMMARY:EQ 4:30PM: Energy Synchronization Review
+DESCRIPTION:How did matching energy levels affect rapport? When was it most/least effective?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250728T090000
+DTEND;TZID=America/New_York:20250728T093000
+SUMMARY:EQ 9AM: Perspective-Taking Exercise
+DESCRIPTION:Before each interaction, spend 30 seconds imagining the other person's current pressures and priorities.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250728T163000
+DTEND;TZID=America/New_York:20250728T170000
+SUMMARY:EQ 4:30PM: Perspective Accuracy Check
+DESCRIPTION:How accurate were your assumptions about others' situations? What did you learn about their perspectives?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250729T090000
+DTEND;TZID=America/New_York:20250729T093000
+SUMMARY:EQ 9AM: Emotional Validation Practice
+DESCRIPTION:When someone expresses frustration/concern, acknowledge their feelings before offering solutions.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250729T163000
+DTEND;TZID=America/New_York:20250729T170000
+SUMMARY:EQ 4:30PM: Validation Impact Assessment
+DESCRIPTION:How did validating emotions before problem-solving change conversations? What did you notice?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250730T090000
+DTEND;TZID=America/New_York:20250730T093000
+SUMMARY:EQ 9AM: Assumption Questioning
+DESCRIPTION:When you feel annoyed by someone, ask: "What might be going on in their life that I don't know about?"
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250730T163000
+DTEND;TZID=America/New_York:20250730T170000
+SUMMARY:EQ 4:30PM: Assumption Challenge Results
+DESCRIPTION:How often were your initial judgments wrong? What alternative explanations did you discover?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250731T090000
+DTEND;TZID=America/New_York:20250731T093000
+SUMMARY:EQ 9AM: Emotional Contagion Awareness
+DESCRIPTION:Notice how others' emotions affect you. When you feel your mood shifting, identify the source.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250731T163000
+DTEND;TZID=America/New_York:20250731T170000
+SUMMARY:EQ 4:30PM: Emotional Influence Analysis
+DESCRIPTION:Whose emotions influenced you most? How can you maintain your emotional equilibrium around different people?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250801T090000
+DTEND;TZID=America/New_York:20250801T093000
+SUMMARY:EQ 9AM: Compassionate Interpretation
+DESCRIPTION:When someone is difficult, think: "They're doing their best with their current resources and knowledge."
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250801T163000
+DTEND;TZID=America/New_York:20250801T170000
+SUMMARY:EQ 4:30PM: Compassion Practice Review
+DESCRIPTION:How did assuming positive intent change your interactions with challenging people?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250804T090000
+DTEND;TZID=America/New_York:20250804T093000
+SUMMARY:EQ 9AM: Speaking Time Tracking
+DESCRIPTION:In meetings, track your speaking vs. listening time. Aim for 30% speaking, 70% listening.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250804T163000
+DTEND;TZID=America/New_York:20250804T170000
+SUMMARY:EQ 4:30PM: Speaking Ratio Analysis
+DESCRIPTION:Did you meet your 30/70 goal? How did reducing your speaking time change meeting dynamics?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250805T090000
+DTEND;TZID=America/New_York:20250805T093000
+SUMMARY:EQ 9AM: Relevance Filter
+DESCRIPTION:Before speaking, ask: "Is this relevant? Does it add value? Is now the right time?"
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250805T163000
+DTEND;TZID=America/New_York:20250805T170000
+SUMMARY:EQ 4:30PM: Relevance Filter Results
+DESCRIPTION:How many times did the relevance filter stop you from speaking? What was the impact on conversations?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250806T090000
+DTEND;TZID=America/New_York:20250806T093000
+SUMMARY:EQ 9AM: Conciseness Challenge
+DESCRIPTION:Limit explanations to 2 sentences max. If more detail is needed, ask "Would you like me to elaborate?"
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250806T163000
+DTEND;TZID=America/New_York:20250806T170000
+SUMMARY:EQ 4:30PM: Conciseness Impact Review
+DESCRIPTION:How did brevity affect your communication effectiveness? When did people ask for more detail?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250807T090000
+DTEND;TZID=America/New_York:20250807T093000
+SUMMARY:EQ 9AM: Jargon Translation
+DESCRIPTION:Explain technical concepts using everyday language. Avoid acronyms and industry-specific terms.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250807T163000
+DTEND;TZID=America/New_York:20250807T170000
+SUMMARY:EQ 4:30PM: Clarity Assessment
+DESCRIPTION:How did simplifying your language affect understanding? What concepts were hardest to translate?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250808T090000
+DTEND;TZID=America/New_York:20250808T093000
+SUMMARY:EQ 9AM: Pause Power Practice
+DESCRIPTION:Insert 2-second pauses before responding to questions. Use the time to formulate thoughtful answers.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250808T163000
+DTEND;TZID=America/New_York:20250808T170000
+SUMMARY:EQ 4:30PM: Thoughtful Response Review
+DESCRIPTION:How did pausing improve your response quality? What did you notice about others' reactions to your pauses?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250811T090000
+DTEND;TZID=America/New_York:20250811T093000
+SUMMARY:EQ 9AM: Proactive Problem-Solving
+DESCRIPTION:Identify 3 small problems others are facing and offer specific solutions or resources.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250811T163000
+DTEND;TZID=America/New_York:20250811T170000
+SUMMARY:EQ 4:30PM: Solution Offering Results
+DESCRIPTION:How were your solutions received? Which types of help were most appreciated?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250812T090000
+DTEND;TZID=America/New_York:20250812T093000
+SUMMARY:EQ 9AM: Knowledge Sharing
+DESCRIPTION:Share a useful tip, resource, or insight with 3 different people based on their current challenges.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250812T163000
+DTEND;TZID=America/New_York:20250812T170000
+SUMMARY:EQ 4:30PM: Knowledge Impact Assessment
+DESCRIPTION:Which shared knowledge was most valuable? How did helping others make you feel?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250813T090000
+DTEND;TZID=America/New_York:20250813T093000
+SUMMARY:EQ 9AM: Connection Facilitation
+DESCRIPTION:Introduce 2 people who could benefit from knowing each other. Make the connection meaningful.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250813T163000
+DTEND;TZID=America/New_York:20250813T170000
+SUMMARY:EQ 4:30PM: Network Building Review
+DESCRIPTION:How did facilitating connections affect your relationships with both parties? What value did you create?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250814T090000
+DTEND;TZID=America/New_York:20250814T093000
+SUMMARY:EQ 9AM: Obstacle Removal
+DESCRIPTION:Identify bureaucratic or logistical obstacles others face and help remove or navigate them.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250814T163000
+DTEND;TZID=America/New_York:20250814T170000
+SUMMARY:EQ 4:30PM: Obstacle Removal Impact
+DESCRIPTION:What obstacles did you help remove? How did this position you as a valuable team member?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250815T090000
+DTEND;TZID=America/New_York:20250815T093000
+SUMMARY:EQ 9AM: Credit Attribution
+DESCRIPTION:Publicly acknowledge others' contributions in meetings. Give specific credit where it's due.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250815T163000
+DTEND;TZID=America/New_York:20250815T170000
+SUMMARY:EQ 4:30PM: Recognition Impact Review
+DESCRIPTION:How did giving credit affect team morale? What was the response from those you recognized?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250818T090000
+DTEND;TZID=America/New_York:20250818T093000
+SUMMARY:EQ 9AM: Feedback Request Practice
+DESCRIPTION:Ask 2 people: "What's one thing I could do differently to work better with you?"
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250818T163000
+DTEND;TZID=America/New_York:20250818T170000
+SUMMARY:EQ 4:30PM: Feedback Reception Analysis
+DESCRIPTION:How did you feel receiving feedback? What patterns emerged? What will you implement?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250819T090000
+DTEND;TZID=America/New_York:20250819T093000
+SUMMARY:EQ 9AM: Defensive Response Monitoring
+DESCRIPTION:Notice when you feel defensive. Pause and ask: "What can I learn from this feedback?"
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250819T163000
+DTEND;TZID=America/New_York:20250819T170000
+SUMMARY:EQ 4:30PM: Defensiveness Pattern Review
+DESCRIPTION:What triggered your defensive responses? How did curiosity replace defensiveness?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250820T090000
+DTEND;TZID=America/New_York:20250820T093000
+SUMMARY:EQ 9AM: Growth Opportunity Identification
+DESCRIPTION:Identify 3 specific skills you want to develop based on this week's feedback and observations.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250820T163000
+DTEND;TZID=America/New_York:20250820T170000
+SUMMARY:EQ 4:30PM: Development Plan Creation
+DESCRIPTION:Create specific action steps for each skill you want to develop. What will you practice next?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250821T090000
+DTEND;TZID=America/New_York:20250821T093000
+SUMMARY:EQ 9AM: Progress Measurement
+DESCRIPTION:Compare your EQ skills now vs. 8 weeks ago. What specific behaviors have changed?
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250821T163000
+DTEND;TZID=America/New_York:20250821T170000
+SUMMARY:EQ 4:30PM: Transformation Assessment
+DESCRIPTION:What's the biggest change others have noticed in you? How has your influence grown?
+END:VEVENT
+
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250822T090000
+DTEND;TZID=America/New_York:20250822T093000
+SUMMARY:EQ 9AM: Future Commitment
+DESCRIPTION:Choose 3 EQ practices you'll continue beyond this program. Make them specific and measurable.
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20250822T163000
+DTEND;TZID=America/New_York:20250822T170000
+SUMMARY:EQ 4:30PM: Mastery Roadmap
+DESCRIPTION:Create your ongoing EQ development plan. How will you maintain and expand these skills?
+END:VEVENT
+
+END:VCALENDAR
