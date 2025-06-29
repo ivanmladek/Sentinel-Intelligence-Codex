@@ -1,0 +1,4 @@
+ollama
+Pillow
+pdf2image
+tqdm
