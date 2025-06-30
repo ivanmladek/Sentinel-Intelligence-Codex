@@ -94,3 +94,38 @@ The library is organized into a hierarchical structure, with the following main 
 ├── Videos
 └── World History
 ```
+
+## PDF Text Extraction and Processing
+
+The process of extracting, cleaning, and preparing the text from PDF files for the LLM is a multi-stage pipeline designed to ensure high-quality, structured data. This process is orchestrated by the `process_refactor.ipynb` notebook.
+
+### 1. Environment Setup and PDF Discovery
+
+- **Dependencies**: The process begins by installing necessary Python libraries, including `nougat-ocr` for text extraction, `nltk` for natural language processing, and `langdetect` for language identification.
+- **PDF Discovery**: The script recursively scans a specified directory (e.g., a Google Drive folder) to locate all PDF files.
+
+### 2. Text Extraction with Nougat
+
+- **Nougat OCR**: For each PDF, the `nougat` command-line tool is used. Nougat is a state-of-the-art OCR tool specifically designed for academic and scientific documents, capable of recognizing and transcribing complex layouts, mathematical equations, and tables into a structured Markdown format (`.mmd`).
+- **Output**: The raw extracted text is saved as a `.mmd` file, preserving the document's structure with Markdown headings.
+
+### 3. Text Cleaning and Garbage Detection
+
+This is a critical step to filter out irrelevant or low-quality text.
+
+- **Cleaning**: A series of regular expressions and cleaning functions are applied to the raw text to:
+    - Remove extra newlines, spaces, and non-ASCII characters.
+    - Eliminate academic citations, references to tables/figures, and bracketed content.
+    - Sanitize garbled punctuation and symbols.
+- **Garbage Detection**: Each segment of text is evaluated against a set of criteria to identify and discard "garbage" content. This includes:
+    - **Language Detection**: Text that is not identified as English is discarded.
+    - **Heuristics**: Checks for "jammed" words (long strings of characters without spaces), an unusually high proportion of single-letter words, and repetitive patterns.
+    - **Quality Scoring**: A `text_quality_score` is calculated based on the presence of common English words, proper part-of-speech patterns, and other linguistic features. Text falling below a certain threshold is flagged as garbage.
+
+### 4. Tokenization and Chunking
+
+- **Chunking Strategy**: The cleaned `.mmd` content is chunked into smaller, manageable segments suitable for the LLM. The chunking logic is designed to respect the document's structure:
+    - The text is split by Markdown headings (`#`, `##`, `###`).
+    - These larger sections are then further divided into sentences using `nltk.sent_tokenize`.
+- **Size Constraints**: The sentences are grouped into chunks with a maximum size (e.g., 8192 characters) to ensure they fit within the model's context window, while avoiding splitting sentences in the middle.
+- **Final Output**: The cleaned, chunked text is saved to a `.jsonl` file, with each line containing a JSON object with a single "text" key, ready for training the LLM. Garbage text is saved to a separate file for review.
