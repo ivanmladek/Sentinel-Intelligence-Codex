@@ -1,5 +1,18 @@
 # Sentinel Intelligence Codex (SIC)
 
+***
+
+> [!WARNING]
+> **FOR OFFICIAL USE ONLY**
+>
+> This digital library and the Large Language Model (LLM) trained on its content are strictly intended for use by authorized personnel within law enforcement, military, and local government agencies in the United States.
+>
+> The library contains material that is sensitive, restricted, and may describe activities that are illegal or dangerous if attempted by unauthorized individuals. The topics covered, including but not limited to weaponry, tactical operations, and forensic procedures, are for informational and operational use by trained professionals only.
+>
+> Unauthorized access, use, or distribution of this library or the associated LLM is strictly prohibited and may be subject to legal action.
+
+***
+
 This library is an extensive digital collection, primarily focused on military history, weaponry, and survival skills, with a significant emphasis on technical and engineering manuals. The breadth of the content suggests a deep dive into practical, often niche, areas of knowledge.
 
 The collection is heavily weighted towards firearms, encompassing detailed manuals, histories, and technical specifications for a vast array of weapons from various eras and countries. This includes sections on ammunition, gunsmithing, full-auto conversions, and even less conventional weaponry, indicating a comprehensive interest in the practicalities of firearms.
