@@ -1,48 +1,44 @@
-# Sentinel Intelligence Codex (SIC)
-
-***
-
-> [!WARNING]
-> **FOR OFFICIAL USE ONLY**
->
-> This digital library and the Large Language Model (LLM) trained on its content are strictly intended for use by authorized personnel within law enforcement, military, and local government agencies in the United States.
->
-> The library contains material that is sensitive, restricted, and may describe activities that are illegal or dangerous if attempted by unauthorized individuals. The topics covered, including but not limited to weaponry, tactical operations, and forensic procedures, are for informational and operational use by trained professionals only.
->
-> 
-> Unauthorized access, use, or distribution of this library or the associated LLM is strictly prohibited and may be subject to legal action.
+# World History Book Collection
 
 > [!NOTE]
 > The books and PDFs referenced in this library are not hosted in this repository. They are freely available for download from the following public resource:
 > 
-> https://the-eye.eu/public/Books/World%20Tracker%20Library/worldtracker.org/media/library/
+> https://the-eye.eu/public/Books/Bibliotheca%20Alexandrina/
 
-***
+This project is a curated collection of historical texts, offering a broad and deep exploration of human history from prehistory to the modern era. The library is organized into a comprehensive set of categories, with a significant emphasis on ancient and classical civilizations, as well as detailed accounts of various historical periods and regions.
 
-This library is an extensive digital collection, primarily focused on military history, weaponry, and survival skills, with a significant emphasis on technical and engineering manuals. The breadth of the content suggests a deep dive into practical, often niche, areas of knowledge.
+The collection is particularly strong in its coverage of **Prehistory** and **Ancient & Classical Civilizations**. The prehistory section delves into archaeology, the Bronze Age, the Iron Age, and the Neolithic period, providing a rich foundation in the early chapters of human history. The section on ancient and classical civilizations is extensive, with in-depth collections on:
 
-The collection is heavily weighted towards firearms, encompassing detailed manuals, histories, and technical specifications for a vast array of weapons from various eras and countries. This includes sections on ammunition, gunsmithing, full-auto conversions, and even less conventional weaponry, indicating a comprehensive interest in the practicalities of firearms.
+*   **Alexander the Great**: Covering his life, conquests, and the Hellenistic world that followed.
+*   **Ancient Egypt**: A vast collection of texts on Egyptian dynasties, mythology, art, and archaeology.
+*   **Ancient Greece**: Exploring the Archaic, Classical, and Hellenistic periods, with a focus on Athens, Sparta, and the broader Greek world.
+*   **Ancient Rome**: A comprehensive look at the Roman Republic and Empire, including its military, society, and key historical figures.
+*   **Other Civilizations**: The library also includes significant collections on the civilizations of the Near East, the Celts, the Vikings, and ancient China, among others.
 
-Complementing the weaponry focus is a substantial volume of material on military strategy, tactics, and law enforcement, covering everything from combat handbooks and intelligence manuals to forensic science and interrogation techniques. This section demonstrates a strong interest in the operational aspects of military and law enforcement activities, including specialized areas like guerrilla warfare, espionage, and even survivalism.
+Beyond the ancient world, the collection extends to **Medieval and Modern History**, with detailed sections on:
 
-Furthermore, the library contains a surprisingly large collection of How-To and DIY guides, spanning home improvement, vehicle maintenance, and various crafting skills. This suggests an interest in practical self-sufficiency and hands-on knowledge.
+*   **The Middle Ages**: Covering the Byzantine Empire, the Crusades, and the development of European kingdoms.
+*   **Early Modern History**: Exploring the Renaissance, the Reformation, and the Age of Discovery.
+*   **Modern History**: With extensive material on World War I, World War II, the Cold War, and various regional conflicts.
 
-The presence of free energy and occult/supernatural topics indicates a less conventional, yet significant, portion of the collection, hinting at an exploration of fringe science and alternative belief systems. While seemingly disparate, these areas might be linked by an underlying theme of seeking knowledge beyond mainstream understanding.
+The library is not limited to political and military history. It also includes substantial collections on:
 
-The library also includes sections on mathematics, science, and specific engineering disciplines like aeronautics and electronics, providing a foundation for understanding the technical underpinnings of many of the other topics. Finally, there are collections on world history and language learning, adding a broader historical and cultural dimension.
+*   **Art and Architecture**: With a focus on historical periods and styles.
+*   **Philosophy and Religion**: Exploring the intellectual and spiritual traditions of various cultures.
+*   **Science and Technology**: Charting the history of scientific discovery and technological innovation.
 
 The ten most important subjects, based on the number of books and depth of coverage, appear to be:
 
-1.  **Firearms and Weaponry**: This is the most prominent subject, with extensive manuals, historical accounts, and technical details.
-2.  **Military History and Tactics**: Covering a wide range of historical conflicts, strategies, and operational guides.
-3.  **Law Enforcement and Forensics**: Including interrogation, crime scene investigation, and legal frameworks.
-4.  **Survival Skills**: Encompassing a broad spectrum from wilderness survival to disaster preparedness and tracking.
-5.  **Engineering (General & Specific Disciplines)**: With a strong focus on automotive, electrical, and aeronautical engineering, along with materials science.
-6.  **Free Energy and Alternative Physics**: A significant collection exploring unconventional energy sources and theories.
-7.  **How-To and DIY Guides**: Covering a wide array of practical skills from home repair to vehicle maintenance.
-8.  **Mathematics**: Including calculus, algebra, and numerical methods, providing foundational knowledge.
-9.  **Psychology and Metaphysics/Spirituality**: Exploring the human mind, consciousness, and various belief systems.
-10. **Science (General & Specific Disciplines)**: Covering biology, chemistry, and physics.
+1.  **Ancient & Classical Civilizations**: The most prominent subject, with extensive collections on Egypt, Greece, Rome, and Alexander the Great.
+2.  **Prehistory**: A deep dive into archaeology and the early stages of human civilization.
+3.  **Military History**: Covering a wide range of historical conflicts, from ancient warfare to modern-day battles.
+4.  **Medieval History**: With a strong focus on the Byzantine Empire, the Crusades, and European kingdoms.
+5.  **Modern History**: Encompassing World War I, World War II, and the Cold War.
+6.  **Regional Histories**: Detailed collections on the history of specific countries and regions, including Britain, China, and the Middle East.
+7.  **Art & Architecture**: Exploring the history of art and architecture across different cultures and periods.
+8.  **Philosophy & Religion**: A significant collection on the history of ideas and belief systems.
+9.  **Biographies**: In-depth accounts of key historical figures, from ancient rulers to modern leaders.
+10. **Archaeology**: With a focus on the methods and discoveries that have shaped our understanding of the past.
 
 ## Library Structure
 
@@ -50,49 +46,16 @@ The library is organized into a hierarchical structure, with the following main 
 
 ```
 .
-├── Aeronautics
-├── Ancient
-├── Art
-├── Books for Children and Parents
-├── Calibre
-├── Car Manuals
-├── Chemistry
-├── Computer
-├── Cooking
-├── Economics
-├── Electronics
-├── Engineering
-├── Firearms
-├── Fitness
-├── Free Energy
-├── Government
-├── Health
-├── History
-├── How-To
-├── Humor
-├── Language
-├── Law
-├── Literature
-├── Locksmithing
-├── Magic
-├── Martial Arts
-├── Mathematics
-├── Medical
-├── Military
-├── Miscellaneous
-├── Music
-├── Occult-Supernatural
-├── Photography
-├── Psychology
-├── Reference
-├── Religion
-├── Science
-├── sitemap.htm
-├── Sociology
-├── Survival
-├── Unsorted
-├── Videos
-└── World History
+├── Prehistory
+├── Ancient & Classical Civilizations
+├── Medieval History
+├── Early Modern History
+├── Modern History
+├── Regional History
+├── Military History
+├── Art & Architecture
+├── Philosophy & Religion
+└── Science & Technology
 ```
 
 ## PDF Text Extraction and Processing
