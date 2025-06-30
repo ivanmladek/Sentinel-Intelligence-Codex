@@ -1,7 +1,7 @@
 pypdf
 tqdm
 reportlab
-transformers==4.30.2
+transformers==4.50.0
 pytorch-lightning==2.0.0
 nougat-ocr
 torch
