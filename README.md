@@ -9,7 +9,13 @@
 >
 > The library contains material that is sensitive, restricted, and may describe activities that are illegal or dangerous if attempted by unauthorized individuals. The topics covered, including but not limited to weaponry, tactical operations, and forensic procedures, are for informational and operational use by trained professionals only.
 >
+> 
 > Unauthorized access, use, or distribution of this library or the associated LLM is strictly prohibited and may be subject to legal action.
+
+> [!NOTE]
+> The books and PDFs referenced in this library are not hosted in this repository. They are freely available for download from the following public resource:
+> 
+> https://the-eye.eu/public/Books/World%20Tracker%20Library/worldtracker.org/media/library/
 
 ***
 
