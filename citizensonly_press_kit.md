@@ -36,6 +36,10 @@ This is your moment. This is your chance to join the vanguard of a new American 
 
 Do not wait for opportunity to knock. Seize it. Let our AI agents be your weapon. Let your talent be the ammunition. Together, we will drive forward and secure the victory.
 
+### About the Founder
+
+Pavel Machalek is a scientist, entrepreneur, and technology executive recognized for pioneering work in satellite imagery analytics, AI-driven geospatial intelligence, and privacy-focused data platforms. As co-founder of both SpaceKnow Inc. and Spartacus, Machalek has received sustained media and industry attention for bringing advanced machine learning applications to global finance, government, and security. His experience building systems that provide objective, ground-truth data in defiance of state-sponsored censorship and his deep skepticism toward centralized surveillance inspired the creation of CitizensOnly.dev. He has been featured in Bloomberg, Fortune, and The Next Web, and has spoken at major conferences like SXSW on the future of AI and remote sensing. Machalek’s ventures are marked by a commitment to data transparency and user sovereignty, challenging the status quo in both global intelligence and personal privacy.
+
 **About CitizensOnly.dev:**
 
 CitizensOnly.dev is the first AI-powered job placement platform exclusively for verified U.S. citizens in the fields of AI and Machine Learning. We are a meritocratic, results-driven organization dedicated to strengthening America's technological workforce by connecting top-tier, citizen-engineers with companies working on sensitive and critical projects. We believe in the power of American ingenuity, and we are committed to ensuring its dominance for generations to come.
