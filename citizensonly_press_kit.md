@@ -44,6 +44,8 @@ Pavel Machalek is a scientist, entrepreneur, and technology executive recognized
 
 CitizensOnly.dev is the first AI-powered job placement platform exclusively for verified U.S. citizens in the fields of AI and Machine Learning. We are a meritocratic, results-driven organization dedicated to strengthening America's technological workforce by connecting top-tier, citizen-engineers with companies working on sensitive and critical projects. We believe in the power of American ingenuity, and we are committed to ensuring its dominance for generations to come.
 
+*Si vis pacem, para bellum* - Publius Flavius Vegetius Renatus
+
 **Media Contact:**
 
 Press Relations
