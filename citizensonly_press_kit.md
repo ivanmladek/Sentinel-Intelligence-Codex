@@ -2,6 +2,8 @@
 
 ## AMERICA’S AI DOMINANCE IS NON-NEGOTIABLE: CitizensOnly.dev Launches to Reclaim High-Tech Jobs for U.S. Citizens
 
+Si vis pacem, para bellum -  Publius Flavius Vegetius Renatus
+
 **SAN FRANCISCO, CA – July 18, 2025** – In an age where digital battlefields are as critical as physical ones, a new force has emerged to ensure America’s technological supremacy. **CitizensOnly.dev**, the first and only AI-powered job placement platform exclusively for verified U.S. citizens, has officially declared its mission: to arm American engineers with the opportunities they deserve and to fortify our nation's most critical industries with homegrown talent.
 
 This is not a drill. This is a call to arms. For too long, our most promising AI engineering roles have been outsourced, offshored, or handed to foreign nationals on temporary visas. The very heart of our innovation is being compromised. While other platforms cast a wide, globalist net, we are building a digital fortress. We are drawing a line in the sand. CitizensOnly.dev is the tip of the spear in the fight to keep American jobs for American citizens.
@@ -43,8 +45,6 @@ Pavel Machalek is a scientist, entrepreneur, and technology executive recognized
 **About CitizensOnly.dev:**
 
 CitizensOnly.dev is the first AI-powered job placement platform exclusively for verified U.S. citizens in the fields of AI and Machine Learning. We are a meritocratic, results-driven organization dedicated to strengthening America's technological workforce by connecting top-tier, citizen-engineers with companies working on sensitive and critical projects. We believe in the power of American ingenuity, and we are committed to ensuring its dominance for generations to come.
-
-*Si vis pacem, para bellum* - Publius Flavius Vegetius Renatus
 
 **Media Contact:**
 
