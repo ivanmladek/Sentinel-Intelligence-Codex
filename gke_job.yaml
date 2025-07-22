@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: batch-processing-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: batch-worker
+        image: gcr.io/google-containers/busybox
+        command: ["sh",  "-c", "echo 'Simulating a batch inference job...' && sleep 30 && echo 'Batch job complete.'"]
+      restartPolicy: Never
+  backoffLimit: 4
