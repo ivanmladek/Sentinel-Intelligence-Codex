@@ -8,3 +8,11 @@ textblob
 langdetect
 huggingface_hub
 unrar
+google-cloud-aiplatform
+google-cloud-storage
+google-cloud-artifact-registry
+google-cloud-run
+google-cloud-container
+docker
+kubernetes
+google-api-python-client
