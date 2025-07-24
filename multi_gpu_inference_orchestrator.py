@@ -67,7 +67,7 @@ def main():
     run_cmd(f"gcloud auth print-access-token | docker login --username=oauth2accesstoken --password-stdin https://us-docker.pkg.dev", "Docker Login to Google Artifact Registry")
 
     vllm_image_uri_v1 = f"{REGION}-docker.pkg.dev/{PROJECT_ID}/{ARTIFACT_REGISTRY_REPO}/{MODEL_DISPLAY_NAME}:v1"
-    build_cmd = f"docker build --platform linux/amd64 -f Dockerfile -t {vllm_image_uri_v1} --build-arg HF_TOKEN={hf_token} ."
+    build_cmd = f"docker build --platform linux/amd64 -f Dockerfile -t {vllm_image_uri_v1} ."
     run_cmd(build_cmd, "Build vLLM container (this may take several minutes)", cwd="serving")
     run_cmd(f"docker push {vllm_image_uri_v1}", "Push vLLM container to Artifact Registry")
 
