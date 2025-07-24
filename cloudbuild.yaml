@@ -1,0 +1,36 @@
+
+# Google Cloud Build configuration for building and pushing Docker images.
+
+steps:
+# 1. Build and push the vLLM serving container
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/${_MODEL_DISPLAY_NAME}:v1',
+    '.'
+  ]
+  dir: 'serving' # Run this step in the 'serving' directory
+
+# 2. Build and push the frontend application container
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/${_CLOUD_RUN_SERVICE_NAME}:latest',
+    '.'
+  ]
+  dir: 'app' # Run this step in the 'app' directory
+
+# Push all the images built in the previous steps to Artifact Registry
+images:
+- '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/${_MODEL_DISPLAY_NAME}:v1'
+- '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/${_CLOUD_RUN_SERVICE_NAME}:latest'
+
+# Define substitutions that can be passed at build time.
+# These will default to the values in your variables.tf file if not provided.
+substitutions:
+  _LOCATION: us-central1
+  _ARTIFACT_REGISTRY_REPO: vllm-serving-repo
+  _MODEL_DISPLAY_NAME: llama2-13b-vllm-demo
+  _CLOUD_RUN_SERVICE_NAME: langchain-llama2-frontend
