@@ -1,1 +1,4 @@
-nougat_lib/
+# Ignore markdown and pdf files
+*.md
+*.pdf
+!CLAUDE.md

@@ -93,6 +93,49 @@ resource "google_container_node_pool" "gke_node_pool" {
 }
 
 # ------------------------------------------------------------------------------
+# Vertex AI Resources
+# ------------------------------------------------------------------------------
+resource "google_vertex_ai_model" "vertex_model" {
+  display_name = var.model_display_name
+  region       = var.region
+  description  = "LLaMA2 13B model served with vLLM"
+
+  container_spec {
+    image_uri = var.vllm_image_uri
+  }
+  artifact_uri = "gs://${var.gcs_bucket_name}/model_artifacts/" # Placeholder, actual model artifacts should be here
+  depends_on = [google_project_service.apis]
+}
+
+resource "google_vertex_ai_endpoint" "vertex_endpoint" {
+  provider     = google-beta
+  name         = "${var.model_display_name}-endpoint"
+  display_name = "${var.model_display_name}-endpoint"
+  region       = var.region
+  project      = var.project_id
+  location     = var.region
+  depends_on = [google_project_service.apis]
+}
+
+resource "google_vertex_ai_model_deployment" "model_deployment" {
+  provider = google-beta
+  endpoint = google_vertex_ai_endpoint.vertex_endpoint.id
+  model    = google_vertex_ai_model.vertex_model.id
+  
+  dedicated_resources {
+    machine_spec {
+      machine_type     = var.machine_type
+      accelerator_type = var.accelerator_type
+      accelerator_count = var.accelerator_count
+    }
+    min_replica_count = 1
+    max_replica_count = 1 # Can be increased for auto-scaling
+  }
+
+  depends_on = [google_vertex_ai_model.vertex_model]
+}
+
+# ------------------------------------------------------------------------------
 # Cloud Run Frontend Service
 # ------------------------------------------------------------------------------
 resource "google_cloud_run_v2_service" "frontend_service" {
@@ -103,6 +146,10 @@ resource "google_cloud_run_v2_service" "frontend_service" {
     containers {
       image = var.app_image_uri
       env {
+        name  = "VERTEX_ENDPOINT_ID"
+        value = split("/", google_vertex_ai_endpoint.vertex_endpoint.id)[5]
+      }
+      env {
         name = "GCP_PROJECT_ID"
         value = var.project_id
       }
@@ -112,7 +159,7 @@ resource "google_cloud_run_v2_service" "frontend_service" {
       }
     }
   }
-  depends_on = [google_project_service.apis]
+  depends_on = [google_project_service.apis, google_vertex_ai_endpoint.vertex_endpoint]
 }
 
 resource "google_cloud_run_v2_service_iam_member" "frontend_service_invoker" {
