@@ -6,10 +6,19 @@ terraform {
       source  = "hashicorp/google"
       version = ">= 4.51.0"
     }
+    google-beta = {
+      source  = "hashicorp/google-beta"
+      version = ">= 4.51.0"
+    }
   }
 }
 
 provider "google" {
+  project = var.project_id
+  region  = var.region
+}
+
+provider "google-beta" {
   project = var.project_id
   region  = var.region
 }
@@ -83,4 +92,32 @@ resource "google_container_node_pool" "gke_node_pool" {
   }
 }
 
-# --- Vertex AI and Cloud Run Resources are commented out for now ---
+# ------------------------------------------------------------------------------
+# Cloud Run Frontend Service
+# ------------------------------------------------------------------------------
+resource "google_cloud_run_v2_service" "frontend_service" {
+  name     = var.cloud_run_service_name
+  location = var.region
+  
+  template {
+    containers {
+      image = var.app_image_uri
+      env {
+        name = "GCP_PROJECT_ID"
+        value = var.project_id
+      }
+      env {
+        name = "GCP_REGION"
+        value = var.region
+      }
+    }
+  }
+  depends_on = [google_project_service.apis]
+}
+
+resource "google_cloud_run_v2_service_iam_member" "frontend_service_invoker" {
+  location = google_cloud_run_v2_service.frontend_service.location
+  name     = google_cloud_run_v2_service.frontend_service.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
