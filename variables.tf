@@ -16,7 +16,7 @@ variable "region" {
 variable "gke_zone" {
   description = "The GCP zone for the GKE cluster."
   type        = string
-  default     = "us-central1-c"
+  default     = "us-central1-b"
 }
 
 variable "gcs_bucket_name" {
