@@ -1,4 +1,4 @@
-# Main Terraform configuration for the Vertex AI and GKE infrastructure
+# Main Terraform configuration for the GKE infrastructure
 
 terraform {
   required_providers {
@@ -6,19 +6,10 @@ terraform {
       source  = "hashicorp/google"
       version = ">= 4.51.0"
     }
-    google-beta = {
-      source  = "hashicorp/google-beta"
-      version = ">= 4.51.0"
-    }
   }
 }
 
 provider "google" {
-  project = var.project_id
-  region  = var.region
-}
-
-provider "google-beta" {
   project = var.project_id
   region  = var.region
 }
@@ -30,7 +21,6 @@ resource "google_project_service" "apis" {
   for_each = toset([
     "aiplatform.googleapis.com",
     "artifactregistry.googleapis.com",
-    "run.googleapis.com",
     "container.googleapis.com",
     "cloudbuild.googleapis.com"
   ])
@@ -39,9 +29,9 @@ resource "google_project_service" "apis" {
 }
 
 # ------------------------------------------------------------------------------
-# GCS Bucket for Model Artifacts
+# GCS Bucket for Data
 # ------------------------------------------------------------------------------
-resource "google_storage_bucket" "model_bucket" {
+resource "google_storage_bucket" "data_bucket" {
   name          = var.gcs_bucket_name
   location      = var.region
   force_destroy = true # Set to false in production
@@ -56,12 +46,12 @@ resource "google_artifact_registry_repository" "docker_repo" {
   location      = var.region
   repository_id = var.artifact_registry_repo
   format        = "DOCKER"
-  description   = "Docker repository for vLLM serving containers"
+  description   = "Docker repository for processing containers"
   depends_on = [google_project_service.apis]
 }
 
 # ------------------------------------------------------------------------------
-# GKE Cluster for Batch Inference
+# GKE Cluster for Parallel Processing
 # ------------------------------------------------------------------------------
 resource "google_container_cluster" "gke_cluster" {
   name     = var.gke_cluster_name
@@ -70,101 +60,29 @@ resource "google_container_cluster" "gke_cluster" {
     create = "60m"
   }
 
-  # Using a simple node pool for batch jobs as in the script
   remove_default_node_pool = true
   initial_node_count       = 1
   deletion_protection      = false
   depends_on = [google_project_service.apis]
 }
 
-resource "google_container_node_pool" "gke_node_pool" {
-  name       = "${var.gke_cluster_name}-node-pool"
+resource "google_container_node_pool" "gpu_node_pool" {
+  name       = "${var.gke_cluster_name}-gpu-node-pool"
   location   = var.gke_zone
   cluster    = google_container_cluster.gke_cluster.name
   node_count = 1
 
   node_config {
-    machine_type = "e2-standard-2"
+    machine_type = var.gke_node_pool_machine_type
     service_account = "416399941568-compute@developer.gserviceaccount.com"
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
-  }
-}
+    preemptible = true
 
-# ------------------------------------------------------------------------------
-# Vertex AI Resources
-# ------------------------------------------------------------------------------
-resource "google_vertex_ai_model" "vertex_model" {
-  display_name = var.model_display_name
-  region       = var.region
-  description  = "LLaMA2 13B model served with vLLM"
-
-  container_spec {
-    image_uri = var.vllm_image_uri
-  }
-  artifact_uri = "gs://${var.gcs_bucket_name}/model_artifacts/" # Placeholder, actual model artifacts should be here
-  depends_on = [google_project_service.apis]
-}
-
-resource "google_vertex_ai_endpoint" "vertex_endpoint" {
-  provider     = google-beta
-  name         = "${var.model_display_name}-endpoint"
-  display_name = "${var.model_display_name}-endpoint"
-  region       = var.region
-  project      = var.project_id
-  location     = var.region
-  depends_on = [google_project_service.apis]
-}
-
-resource "google_vertex_ai_model_deployment" "model_deployment" {
-  provider = google-beta
-  endpoint = google_vertex_ai_endpoint.vertex_endpoint.id
-  model    = google_vertex_ai_model.vertex_model.id
-  
-  dedicated_resources {
-    machine_spec {
-      machine_type     = var.machine_type
-      accelerator_type = var.accelerator_type
-      accelerator_count = var.accelerator_count
-    }
-    min_replica_count = 1
-    max_replica_count = 1 # Can be increased for auto-scaling
-  }
-
-  depends_on = [google_vertex_ai_model.vertex_model]
-}
-
-# ------------------------------------------------------------------------------
-# Cloud Run Frontend Service
-# ------------------------------------------------------------------------------
-resource "google_cloud_run_v2_service" "frontend_service" {
-  name     = var.cloud_run_service_name
-  location = var.region
-  
-  template {
-    containers {
-      image = var.app_image_uri
-      env {
-        name  = "VERTEX_ENDPOINT_ID"
-        value = split("/", google_vertex_ai_endpoint.vertex_endpoint.id)[5]
-      }
-      env {
-        name = "GCP_PROJECT_ID"
-        value = var.project_id
-      }
-      env {
-        name = "GCP_REGION"
-        value = var.region
-      }
+    guest_accelerator {
+      type = var.gke_node_pool_accelerator_type
+      count = var.gke_node_pool_accelerator_count
     }
   }
-  depends_on = [google_project_service.apis, google_vertex_ai_endpoint.vertex_endpoint]
-}
-
-resource "google_cloud_run_v2_service_iam_member" "frontend_service_invoker" {
-  location = google_cloud_run_v2_service.frontend_service.location
-  name     = google_cloud_run_v2_service.frontend_service.name
-  role     = "roles/run.invoker"
-  member   = "allUsers"
 }
