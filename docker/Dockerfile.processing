@@ -1,0 +1,31 @@
+# Dockerfile for the PDF processing worker
+
+FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu20.04
+
+# Set non-interactive frontend to avoid prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    poppler-utils \
+    tesseract-ocr \
+    libmagic-dev \
+    unrar \
+    python3-pip \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set up a working directory
+WORKDIR /app
+
+# Copy the requirements file and install Python dependencies
+RUN pip3 install numpy==1.24.4
+RUN pip3 install --no-deps transformers==4.38.2 pyarrow==14.0.1 timm==0.5.4 requests==2.31.0 albumentations==1.0.0
+RUN pip3 install --no-deps git+https://github.com/facebookresearch/nougat
+RUN pip3 install --no-deps textblob langdetect beautifulsoup4 huggingface_hub tqdm pandas
+
+# Copy the processing script
+COPY parallel_process.py .
+
+# Set the entrypoint for the container
+ENTRYPOINT ["python3", "parallel_process.py"]

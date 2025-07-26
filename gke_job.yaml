@@ -1,13 +1,24 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: batch-processing-job
+  name: pdf-processing-job
 spec:
+  parallelism: 4
+  completions: 4
   template:
     spec:
       containers:
-      - name: batch-worker
-        image: gcr.io/google-containers/busybox
-        command: ["sh",  "-c", "echo 'Simulating a batch inference job...' && sleep 30 && echo 'Batch job complete.'"]
+      - name: pdf-processor
+        image: us-central1-docker.pkg.dev/gdrive-410709/vllm-serving-repo/pdf-processor:latest
+        env:
+        - name: BASE_URL
+          value: "https://the-eye.eu/public/Books/Bibliotheca%20Alexandrina/5.%20Ancient%20%26%20Classical%20Civilizations%20Series/"
+        - name: BUCKET_NAME
+          value: "gdrive-410709-vllm-13b-demo-bucket"
+        - name: NUM_PODS
+          value: "4"
+        resources:
+          limits:
+            nvidia.com/gpu: 1
       restartPolicy: Never
   backoffLimit: 4

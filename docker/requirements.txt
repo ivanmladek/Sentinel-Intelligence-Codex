@@ -1,0 +1,14 @@
+numpy==1.26.4
+transformers==4.38.2
+pyarrow==14.0.1
+timm==0.5.4
+requests==2.31.0
+albumentations==1.0.0
+textblob
+langdetect
+beautifulsoup4
+huggingface_hub
+tqdm
+pandas
+nltk
+google-cloud-storage
