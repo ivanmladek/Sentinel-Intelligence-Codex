@@ -423,8 +423,10 @@ def process_single_rar(rar_file_url, bucket_name):
             os.remove(rar_path)
         return 0
 
+    # Delete the RAR file after extraction to save space
     if os.path.exists(rar_path):
         os.remove(rar_path)
+        logger.info(f"Deleted RAR file {rar_path} to save space.")
 
     pdf_files = [os.path.join(root, file) for root, _, files in os.walk(extract_path) for file in files if file.lower().endswith('.pdf')]
     logger.info(f"Found {len(pdf_files)} PDF files in extracted directory: {extract_path}")
@@ -439,19 +441,41 @@ def process_single_rar(rar_file_url, bucket_name):
     for pdf_path in pdf_files:
         logger.info(f"Processing PDF: {pdf_path}")
         
-        # Check if the cleaned JSONL file already exists in GCS
+        # Check if the PDF already exists in GCS
         pdf_basename = os.path.basename(pdf_path)
+        pdf_gcs_path = f"pdfs/{pdf_basename}"
+        
+        # Check if PDF already exists in GCS
+        if not check_gcs_file_exists(bucket_name, pdf_gcs_path):
+            # Upload PDF to GCS if it doesn't exist
+            try:
+                upload_to_gcs(pdf_path, bucket_name, pdf_gcs_path)
+                logger.info(f"Uploaded PDF {pdf_basename} to GCS.")
+            except Exception as e:
+                logger.error(f"Failed to upload PDF {pdf_basename} to GCS: {e}")
+        else:
+            logger.info(f"PDF {pdf_basename} already exists in GCS. Skipping upload.")
+        
+        # Check if the cleaned JSONL file already exists in GCS
         cleaned_jsonl_name = f"{os.path.splitext(pdf_basename)[0]}_cleaned.jsonl"
         garbage_jsonl_name = f"{os.path.splitext(pdf_basename)[0]}_garbage.jsonl"
         
         # Check if cleaned file already exists in GCS
         if check_gcs_file_exists(bucket_name, f"cleaned/{cleaned_jsonl_name}"):
             logger.info(f"Cleaned JSONL file for {pdf_basename} already exists in GCS. Skipping processing.")
+            # Delete the local PDF file to save space
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
+                logger.info(f"Deleted local PDF file {pdf_path} to save space.")
             continue
         
         # Check if garbage file already exists in GCS
         if check_gcs_file_exists(bucket_name, f"garbage/{garbage_jsonl_name}"):
             logger.info(f"Garbage JSONL file for {pdf_basename} already exists in GCS. Skipping processing.")
+            # Delete the local PDF file to save space
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
+                logger.info(f"Deleted local PDF file {pdf_path} to save space.")
             continue
         
         # Process the PDF if it hasn't been processed yet
@@ -470,8 +494,17 @@ def process_single_rar(rar_file_url, bucket_name):
             if garbage_jsonl and os.path.exists(garbage_jsonl):
                 destination_blob_name = f"garbage/{os.path.basename(garbage_jsonl)}"
                 upload_to_gcs(garbage_jsonl, bucket_name, destination_blob_name)
+                
+            # Delete the local PDF file to save space after processing
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
+                logger.info(f"Deleted local PDF file {pdf_path} to save space.")
         else:
             logger.error(f"Nougat processing failed for {pdf_path}. Skipping cleaning, chunking, and upload.")
+            # Delete the local PDF file to save space even if processing failed
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
+                logger.info(f"Deleted local PDF file {pdf_path} to save space.")
 
     if os.path.exists(extract_path):
         shutil.rmtree(extract_path)
