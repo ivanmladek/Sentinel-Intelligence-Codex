@@ -148,3 +148,24 @@ kubectl apply -f gke_job.yaml
 ```
 
 The pipeline is designed to be scalable and cost-effective, leveraging GCP's preemptible GPU instances and Kubernetes' orchestration capabilities to process large collections of PDF files efficiently.
+
+## Work Distribution
+
+The pipeline uses Kubernetes Jobs with `completionMode: Indexed` to distribute work among multiple pods. Each pod receives a unique index through the `JOB_COMPLETION_INDEX` environment variable, which is used to divide the list of RAR files among the pods. This ensures that each pod processes a different subset of RAR files, enabling efficient parallel processing.
+
+## Troubleshooting
+
+If you encounter issues with work distribution, ensure that:
+1. The `gke_job.yaml` file has `completionMode: Indexed` configured
+2. The job is recreated after making changes to the job configuration (as `completionMode` is immutable)
+3. Each pod has a unique `JOB_COMPLETION_INDEX` environment variable
+
+You can verify the `JOB_COMPLETION_INDEX` in each pod with:
+```bash
+kubectl exec <pod-name> -- printenv | grep JOB_COMPLETION_INDEX
+```
+
+You can check which RAR file each pod is processing by looking at the pod logs:
+```bash
+kubectl logs <pod-name> | grep "Processing"
+```
