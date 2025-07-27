@@ -5,6 +5,7 @@ metadata:
 spec:
   parallelism: 4
   completions: 4
+  completionMode: Indexed
   template:
     spec:
       containers:
@@ -12,7 +13,7 @@ spec:
         image: us-central1-docker.pkg.dev/gdrive-410709/vllm-serving-repo/pdf-processor:latest
         env:
         - name: BASE_URL
-          value: "https://the-eye.eu/public/Books/Bibliotheca%20Alexandrina/
+          value: "https://the-eye.eu/public/Books/Bibliotheca%20Alexandrina/"
         - name: BUCKET_NAME
           value: "gdrive-410709-vllm-13b-demo-bucket"
         - name: HUGGING_FACE_REPO

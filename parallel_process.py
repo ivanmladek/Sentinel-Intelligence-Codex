@@ -478,58 +478,6 @@ def process_single_rar(rar_file_url, bucket_name):
 
     return successful_uploads_count
 
-def process_single_rar(rar_file_url, bucket_name):
-    """Processes a single RAR file: downloads, extracts, processes PDFs, and uploads to GCS."""
-    rar_filename = rar_file_url.split('/')[-1]
-    sanitized_rar_filename = sanitize_filename(rar_filename)
-    rar_path = sanitized_rar_filename
-    extract_path = os.path.splitext(rar_path)[0]
-
-    logger.info(f"--- Processing {rar_filename} ---")
-
-    if not download_file(rar_file_url, rar_path):
-        logger.error(f"Failed to download RAR file: {rar_file_url}. Skipping.")
-        return 0
-
-    if not extract_rar(rar_path, extract_path):
-        logger.error(f"Failed to extract RAR file: {rar_path}. Cleaning up and skipping.")
-        if os.path.exists(rar_path):
-            os.remove(rar_path)
-        return 0
-
-    if os.path.exists(rar_path):
-        os.remove(rar_path)
-
-    pdf_files = [os.path.join(root, file) for root, _, files in os.walk(extract_path) for file in files if file.lower().endswith('.pdf')]
-    logger.info(f"Found {len(pdf_files)} PDF files in extracted directory: {extract_path}")
-
-    if not pdf_files:
-        logger.warning(f"No PDF files found in {extract_path}. Cleaning up.")
-        if os.path.exists(extract_path):
-            shutil.rmtree(extract_path)
-        return 0
-
-    successful_uploads_count = 0
-    for pdf_path in pdf_files:
-        logger.info(f"Processing PDF: {pdf_path}")
-        mmd_path = process_pdf(pdf_path, extract_path)
-        if mmd_path:
-            logger.info(f"Nougat processing successful for {pdf_path}. MMD file: {mmd_path}")
-            cleaned_jsonl, garbage_jsonl = process_and_chunk_mmd(mmd_path, extract_path)
-            if cleaned_jsonl and os.path.exists(cleaned_jsonl):
-                destination_blob_name = f"cleaned/{os.path.basename(cleaned_jsonl)}"
-                upload_to_gcs(cleaned_jsonl, bucket_name, destination_blob_name)
-                successful_uploads_count += 1
-            if garbage_jsonl and os.path.exists(garbage_jsonl):
-                destination_blob_name = f"garbage/{os.path.basename(garbage_jsonl)}"
-                upload_to_gcs(garbage_jsonl, bucket_name, destination_blob_name)
-        else:
-            logger.error(f"Nougat processing failed for {pdf_path}. Skipping cleaning, chunking, and upload.")
-
-    if os.path.exists(extract_path):
-        shutil.rmtree(extract_path)
-
-    return successful_uploads_count
 
 def main():
     """Main function to process the library."""

@@ -7,6 +7,10 @@
 
 This project is a comprehensive pipeline for processing a curated collection of historical texts, offering a broad and deep exploration of human history from prehistory to the modern era. The pipeline is designed to extract, clean, and prepare text from PDF files for use in training large language models.
 
+> [!NOTE]
+
+> The processed dataset is available on Hugging Face at: https://huggingface.co/datasets/Disperser5601/Sentinel-Intelligence-Codex
+
 ## Dataset Overview
 
 The collection is organized into a comprehensive set of categories, with a significant emphasis on ancient and classical civilizations, as well as detailed accounts of various historical periods and regions.
@@ -170,6 +174,3 @@ You can check which RAR file each pod is processing by looking at the pod logs:
 kubectl logs <pod-name> | grep "Processing"
 ```
 
-## Dataset Location
-
-The processed dataset is available on Hugging Face at: https://huggingface.co/datasets/Disperser5601/Sentinel-Intelligence-Codex
