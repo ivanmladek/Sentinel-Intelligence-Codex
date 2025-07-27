@@ -22,6 +22,7 @@ from google.cloud import storage
 # --- Configuration ---
 BASE_URL = os.environ.get("BASE_URL", "https://the-eye.eu/public/Books/Bibliotheca%20Alexandrina/")
 BUCKET_NAME = os.environ.get("BUCKET_NAME")
+HUGGING_FACE_REPO = os.environ.get("HUGGING_FACE_REPO", "Disperser5601/Sentinel-Intelligence-Codex")
 GARBAGE_THRESHOLD = 0.5
 LENWORD = 50
 
@@ -146,7 +147,7 @@ def process_pdf(pdf_path, output_dir):
 
     try:
         process = subprocess.Popen(
-            ['nougat', pdf_path, '-o', output_dir, '--batchsize', '2', '--no-skipping'],
+            ['nougat', pdf_path, '-o', output_dir, '--batchsize', '4', '--no-skipping'],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             bufsize=1,
@@ -176,6 +177,44 @@ def process_pdf(pdf_path, output_dir):
     except Exception as e:
         logger.error(f"An error occurred during Nougat processing of {pdf_path}: {e}")
         return None
+
+def check_gcs_file_exists(bucket_name, blob_name):
+    """Check if a file exists in Google Cloud Storage."""
+    try:
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(bucket_name)
+        blob = bucket.blob(blob_name)
+        return blob.exists()
+    except Exception as e:
+        logger.error(f"Error checking GCS file existence for {blob_name}: {e}")
+        return False
+
+def upload_to_huggingface(file_path, repo_id, repo_type="dataset"):
+    """Upload a file to a Hugging Face repository."""
+    if not os.path.exists(file_path):
+        logger.error(f"File not found for upload to Hugging Face: {file_path}")
+        return False
+
+    # Get Hugging Face token from environment variable
+    hf_token = os.environ.get("HUGGING_FACE_TOKEN")
+    if not hf_token:
+        logger.error("HUGGING_FACE_TOKEN environment variable not set. Cannot upload to Hugging Face.")
+        return False
+
+    logger.info(f"Attempting to upload {file_path} to Hugging Face repo '{repo_id}' (type: {repo_type}).")
+    try:
+        api = HfApi(token=hf_token)
+        api.upload_file(
+            path_or_fileobj=file_path,
+            path_in_repo=os.path.basename(file_path),
+            repo_id=repo_id,
+            repo_type=repo_type,
+        )
+        logger.info(f"Successfully uploaded {file_path} to {repo_id}")
+        return True
+    except Exception as e:
+        logger.error(f"Error uploading {file_path} to Hugging Face repo '{repo_id}': {e}")
+        return False
 
 def clean_text(text):
     logger.debug(f"Cleaning text (first 100 chars): {text[:100]}...")
@@ -275,7 +314,7 @@ def chunk_text(content, max_size=8192):
     lines = content.split('\n')
     logger.debug(f"Splitting content into {len(lines)} lines.")
     for i, line in enumerate(lines):
-        if line.strip().startswith(kbs("# ", "## ", "### ")):
+        if line.strip().startswith(("# ", "## ", "### ")):
             logger.debug(f"Found markdown heading at line {i}: {line.strip()}")
             if current_segment:
                 logger.debug(f"Processing previous segment before heading (length: {len(current_segment)}).")
@@ -364,6 +403,80 @@ def upload_to_gcs(file_path, bucket_name, destination_blob_name):
     blob.upload_from_filename(file_path)
 
     logger.info(f"File {file_path} uploaded to {destination_blob_name}.")
+
+def process_single_rar(rar_file_url, bucket_name):
+    """Processes a single RAR file: downloads, extracts, processes PDFs, and uploads to GCS."""
+    rar_filename = rar_file_url.split('/')[-1]
+    sanitized_rar_filename = sanitize_filename(rar_filename)
+    rar_path = sanitized_rar_filename
+    extract_path = os.path.splitext(rar_path)[0]
+
+    logger.info(f"--- Processing {rar_filename} ---")
+
+    if not download_file(rar_file_url, rar_path):
+        logger.error(f"Failed to download RAR file: {rar_file_url}. Skipping.")
+        return 0
+
+    if not extract_rar(rar_path, extract_path):
+        logger.error(f"Failed to extract RAR file: {rar_path}. Cleaning up and skipping.")
+        if os.path.exists(rar_path):
+            os.remove(rar_path)
+        return 0
+
+    if os.path.exists(rar_path):
+        os.remove(rar_path)
+
+    pdf_files = [os.path.join(root, file) for root, _, files in os.walk(extract_path) for file in files if file.lower().endswith('.pdf')]
+    logger.info(f"Found {len(pdf_files)} PDF files in extracted directory: {extract_path}")
+
+    if not pdf_files:
+        logger.warning(f"No PDF files found in {extract_path}. Cleaning up.")
+        if os.path.exists(extract_path):
+            shutil.rmtree(extract_path)
+        return 0
+
+    successful_uploads_count = 0
+    for pdf_path in pdf_files:
+        logger.info(f"Processing PDF: {pdf_path}")
+        
+        # Check if the cleaned JSONL file already exists in GCS
+        pdf_basename = os.path.basename(pdf_path)
+        cleaned_jsonl_name = f"{os.path.splitext(pdf_basename)[0]}_cleaned.jsonl"
+        garbage_jsonl_name = f"{os.path.splitext(pdf_basename)[0]}_garbage.jsonl"
+        
+        # Check if cleaned file already exists in GCS
+        if check_gcs_file_exists(bucket_name, f"cleaned/{cleaned_jsonl_name}"):
+            logger.info(f"Cleaned JSONL file for {pdf_basename} already exists in GCS. Skipping processing.")
+            continue
+        
+        # Check if garbage file already exists in GCS
+        if check_gcs_file_exists(bucket_name, f"garbage/{garbage_jsonl_name}"):
+            logger.info(f"Garbage JSONL file for {pdf_basename} already exists in GCS. Skipping processing.")
+            continue
+        
+        # Process the PDF if it hasn't been processed yet
+        mmd_path = process_pdf(pdf_path, extract_path)
+        if mmd_path:
+            logger.info(f"Nougat processing successful for {pdf_path}. MMD file: {mmd_path}")
+            cleaned_jsonl, garbage_jsonl = process_and_chunk_mmd(mmd_path, extract_path)
+            if cleaned_jsonl and os.path.exists(cleaned_jsonl):
+                destination_blob_name = f"cleaned/{os.path.basename(cleaned_jsonl)}"
+                upload_to_gcs(cleaned_jsonl, bucket_name, destination_blob_name)
+                
+                # Upload cleaned JSONL to Hugging Face
+                upload_to_huggingface(cleaned_jsonl, HUGGING_FACE_REPO)
+                
+                successful_uploads_count += 1
+            if garbage_jsonl and os.path.exists(garbage_jsonl):
+                destination_blob_name = f"garbage/{os.path.basename(garbage_jsonl)}"
+                upload_to_gcs(garbage_jsonl, bucket_name, destination_blob_name)
+        else:
+            logger.error(f"Nougat processing failed for {pdf_path}. Skipping cleaning, chunking, and upload.")
+
+    if os.path.exists(extract_path):
+        shutil.rmtree(extract_path)
+
+    return successful_uploads_count
 
 def process_single_rar(rar_file_url, bucket_name):
     """Processes a single RAR file: downloads, extracts, processes PDFs, and uploads to GCS."""

@@ -12,9 +12,16 @@ spec:
         image: us-central1-docker.pkg.dev/gdrive-410709/vllm-serving-repo/pdf-processor:latest
         env:
         - name: BASE_URL
-          value: "https://the-eye.eu/public/Books/Bibliotheca%20Alexandrina/5.%20Ancient%20%26%20Classical%20Civilizations%20Series/"
+          value: "https://the-eye.eu/public/Books/Bibliotheca%20Alexandrina/
         - name: BUCKET_NAME
           value: "gdrive-410709-vllm-13b-demo-bucket"
+        - name: HUGGING_FACE_REPO
+          value: "Disperser5601/Sentinel-Intelligence-Codex"
+        - name: HUGGING_FACE_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: huggingface-token
+              key: token
         - name: NUM_PODS
           value: "4"
         resources:

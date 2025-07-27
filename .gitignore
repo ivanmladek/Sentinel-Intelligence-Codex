@@ -2,3 +2,6 @@
 *.md
 *.pdf
 !CLAUDE.md
+
+# Ignore Kubernetes secrets
+kubernetes/huggingface-secret.yaml

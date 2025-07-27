@@ -117,4 +117,34 @@ To deploy the pipeline:
 2. **Build and Push Docker Image**: Build the processing container and push it to the Artifact Registry.
 3. **Deploy Kubernetes Job**: Apply the `gke_job.yaml` manifest to start the parallel processing job.
 
+## Hugging Face Integration
+
+The pipeline now includes integration with Hugging Face to automatically upload cleaned JSONL files to a dataset repository.
+
+### Setting up Hugging Face Secret
+
+Before deploying the job, you need to create a Kubernetes secret with your Hugging Face API token:
+
+1. Generate a Hugging Face API token from your [Hugging Face account settings](https://huggingface.co/settings/tokens)
+2. Create a Kubernetes secret with the token:
+   ```bash
+   echo -n 'YOUR_HUGGING_FACE_TOKEN' | base64
+   ```
+3. Update the `kubernetes/huggingface-secret.yaml` file with the base64-encoded token
+4. Apply the secret to your cluster:
+   ```bash
+   kubectl apply -f kubernetes/huggingface-secret.yaml
+   ```
+
+**Security Note**: The `kubernetes/huggingface-secret.yaml` file contains your Hugging Face API token and should never be committed to version control.
+The `.gitignore` file has been configured to exclude this file, but you should still be careful not to accidentally commit it.
+
+### Deploying the Updated Job
+
+After creating the secret, you can deploy the updated job:
+
+```bash
+kubectl apply -f gke_job.yaml
+```
+
 The pipeline is designed to be scalable and cost-effective, leveraging GCP's preemptible GPU instances and Kubernetes' orchestration capabilities to process large collections of PDF files efficiently.
