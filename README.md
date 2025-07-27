@@ -169,3 +169,7 @@ You can check which RAR file each pod is processing by looking at the pod logs:
 ```bash
 kubectl logs <pod-name> | grep "Processing"
 ```
+
+## Dataset Location
+
+The processed dataset is available on Hugging Face at: https://huggingface.co/datasets/Disperser5601/Sentinel-Intelligence-Codex
