@@ -62,7 +62,7 @@ The GKE cluster is configured with the following specifications:
 
 The processing logic is packaged in a Docker container that includes all necessary dependencies:
 
-*   **Base Image**: `nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu20.04`
+*   **Base Image**: `nvidia/cuda:12.3.1-runtime-ubuntu22.04`
 *   **Dependencies**: 
     * `nougat-ocr` for PDF text extraction
     * `nltk` for natural language processing

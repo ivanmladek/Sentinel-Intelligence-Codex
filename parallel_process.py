@@ -147,7 +147,7 @@ def process_pdf(pdf_path, output_dir):
 
     try:
         process = subprocess.Popen(
-            ['nougat', pdf_path, '-o', output_dir, '--batchsize', '4', '--no-skipping'],
+            ['nougat', pdf_path, '-o', output_dir, '--batchsize', '2', '--no-skipping'],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             bufsize=1,
