@@ -28,5 +28,5 @@ spec:
         resources:
           limits:
             nvidia.com/gpu: 1
-      restartPolicy: Never
+      restartPolicy: OnFailure
   backoffLimit: 4
