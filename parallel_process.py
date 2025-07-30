@@ -2,6 +2,7 @@ import os
 import re
 import json
 import logging
+import random
 import shutil
 import subprocess
 import sys
@@ -433,6 +434,16 @@ def process_single_rar(rar_file_url, bucket_name):
     extract_path = os.path.splitext(rar_path)[0]
 
     logger.info(f"--- Processing {rar_filename} ---")
+    
+    # Check if the RAR file already exists in GCS
+    rar_gcs_path = f"rars/{rar_filename}"
+    if check_gcs_file_exists(bucket_name, rar_gcs_path):
+        logger.info(f"RAR file {rar_filename} already exists in GCS. Skipping processing.")
+        # Delete the local RAR file to save space
+        if os.path.exists(rar_path):
+            os.remove(rar_path)
+            logger.info(f"Deleted local RAR file {rar_path} to save space.")
+        return 0
 
     if not download_file(rar_file_url, rar_path):
         logger.error(f"Failed to download RAR file: {rar_file_url}. Skipping.")
@@ -450,6 +461,7 @@ def process_single_rar(rar_file_url, bucket_name):
         logger.info(f"Deleted RAR file {rar_path} to save space.")
 
     pdf_files = [os.path.join(root, file) for root, _, files in os.walk(extract_path) for file in files if file.lower().endswith('.pdf')]
+    random.shuffle(pdf_files)
     logger.info(f"Found {len(pdf_files)} PDF files in extracted directory: {extract_path}")
 
     if not pdf_files:
@@ -578,6 +590,17 @@ def process_single_rar(rar_file_url, bucket_name):
 
     if os.path.exists(extract_path):
         shutil.rmtree(extract_path)
+        
+    # Upload the RAR file to GCS after processing
+    if os.path.exists(rar_path):
+        try:
+            upload_to_gcs(rar_path, bucket_name, rar_gcs_path)
+            logger.info(f"Uploaded RAR file {rar_filename} to GCS.")
+        except Exception as e:
+            logger.error(f"Failed to upload RAR file {rar_filename} to GCS: {e}")
+        # Delete the local RAR file to save space
+        os.remove(rar_path)
+        logger.info(f"Deleted local RAR file {rar_path} to save space.")
 
     return successful_uploads_count
 
@@ -592,6 +615,7 @@ def main():
 
     # Get the list of RAR files to process
     rar_files = get_file_list(BASE_URL)
+    random.shuffle(rar_files)
 
     # Distribute the work among the pods
     pod_index = int(os.environ.get("JOB_COMPLETION_INDEX", 0))
