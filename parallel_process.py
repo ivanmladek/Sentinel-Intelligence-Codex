@@ -216,6 +216,27 @@ def upload_to_huggingface(file_path, repo_id, repo_type="dataset"):
         logger.error(f"Error uploading {file_path} to Hugging Face repo '{repo_id}': {e}")
         return False
 
+def check_huggingface_file_exists(repo_id, filename, repo_type="dataset"):
+    """Check if a file exists in a Hugging Face repository."""
+    # Get Hugging Face token from environment variable
+    hf_token = os.environ.get("HUGGING_FACE_TOKEN")
+    if not hf_token:
+        logger.error("HUGGING_FACE_TOKEN environment variable not set. Cannot check Hugging Face.")
+        return False
+
+    logger.debug(f"Checking if file {filename} exists in Hugging Face repo '{repo_id}' (type: {repo_type}).")
+    try:
+        api = HfApi(token=hf_token)
+        # List files in the repository
+        repo_files = api.list_repo_files(repo_id=repo_id, repo_type=repo_type)
+        # Check if the specific file exists
+        file_exists = filename in repo_files
+        logger.debug(f"File {filename} exists in Hugging Face repo '{repo_id}': {file_exists}")
+        return file_exists
+    except Exception as e:
+        logger.error(f"Error checking Hugging Face repo '{repo_id}' for file {filename}: {e}")
+        return False
+
 def clean_text(text):
     logger.debug(f"Cleaning text (first 100 chars): {text[:100]}...")
     initial_len = len(text)
@@ -468,6 +489,24 @@ def process_single_rar(rar_file_url, bucket_name):
                 os.remove(pdf_path)
                 logger.info(f"Deleted local PDF file {pdf_path} to save space.")
             continue
+            
+        # Check if the cleaned JSONL file already exists on Hugging Face
+        if check_huggingface_file_exists(HUGGING_FACE_REPO, cleaned_jsonl_name):
+            logger.info(f"Cleaned JSONL file for {pdf_basename} already exists on Hugging Face. Skipping processing.")
+            # Delete the local PDF file to save space
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
+                logger.info(f"Deleted local PDF file {pdf_path} to save space.")
+            continue
+            
+        # Check if the garbage JSONL file already exists on Hugging Face
+        if check_huggingface_file_exists(HUGGING_FACE_REPO, garbage_jsonl_name):
+            logger.info(f"Garbage JSONL file for {pdf_basename} already exists on Hugging Face. Skipping processing.")
+            # Delete the local PDF file to save space
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
+                logger.info(f"Deleted local PDF file {pdf_path} to save space.")
+            continue
         
         # Check if garbage file already exists in GCS
         if check_gcs_file_exists(bucket_name, f"garbage/{garbage_jsonl_name}"):
@@ -487,24 +526,55 @@ def process_single_rar(rar_file_url, bucket_name):
                 destination_blob_name = f"cleaned/{os.path.basename(cleaned_jsonl)}"
                 upload_to_gcs(cleaned_jsonl, bucket_name, destination_blob_name)
                 
-                # Upload cleaned JSONL to Hugging Face
-                upload_to_huggingface(cleaned_jsonl, HUGGING_FACE_REPO)
+                # Check if the cleaned JSONL file already exists on Hugging Face before uploading
+                if not check_huggingface_file_exists(HUGGING_FACE_REPO, os.path.basename(cleaned_jsonl)):
+                    # Upload cleaned JSONL to Hugging Face
+                    upload_to_huggingface(cleaned_jsonl, HUGGING_FACE_REPO)
+                else:
+                    logger.info(f"Cleaned JSONL file {os.path.basename(cleaned_jsonl)} already exists on Hugging Face. Skipping upload.")
                 
                 successful_uploads_count += 1
             if garbage_jsonl and os.path.exists(garbage_jsonl):
                 destination_blob_name = f"garbage/{os.path.basename(garbage_jsonl)}"
                 upload_to_gcs(garbage_jsonl, bucket_name, destination_blob_name)
                 
+                # Check if the garbage JSONL file already exists on Hugging Face before uploading
+                if not check_huggingface_file_exists(HUGGING_FACE_REPO, os.path.basename(garbage_jsonl)):
+                    # Upload garbage JSONL to Hugging Face
+                    upload_to_huggingface(garbage_jsonl, HUGGING_FACE_REPO)
+                else:
+                    logger.info(f"Garbage JSONL file {os.path.basename(garbage_jsonl)} already exists on Hugging Face. Skipping upload.")
+                
             # Delete the local PDF file to save space after processing
             if os.path.exists(pdf_path):
                 os.remove(pdf_path)
                 logger.info(f"Deleted local PDF file {pdf_path} to save space.")
+                
+            # Delete the local cleaned JSONL file to save space
+            if os.path.exists(cleaned_jsonl):
+                os.remove(cleaned_jsonl)
+                logger.info(f"Deleted local cleaned JSONL file {cleaned_jsonl} to save space.")
+                
+            # Delete the local garbage JSONL file to save space
+            if os.path.exists(garbage_jsonl):
+                os.remove(garbage_jsonl)
+                logger.info(f"Deleted local garbage JSONL file {garbage_jsonl} to save space.")
         else:
             logger.error(f"Nougat processing failed for {pdf_path}. Skipping cleaning, chunking, and upload.")
             # Delete the local PDF file to save space even if processing failed
             if os.path.exists(pdf_path):
                 os.remove(pdf_path)
                 logger.info(f"Deleted local PDF file {pdf_path} to save space.")
+                
+            # Delete the local cleaned JSONL file if it exists
+            if 'cleaned_jsonl' in locals() and os.path.exists(cleaned_jsonl):
+                os.remove(cleaned_jsonl)
+                logger.info(f"Deleted local cleaned JSONL file {cleaned_jsonl} to save space.")
+                
+            # Delete the local garbage JSONL file if it exists
+            if 'garbage_jsonl' in locals() and os.path.exists(garbage_jsonl):
+                os.remove(garbage_jsonl)
+                logger.info(f"Deleted local garbage JSONL file {garbage_jsonl} to save space.")
 
     if os.path.exists(extract_path):
         shutil.rmtree(extract_path)
