@@ -550,13 +550,7 @@ def process_single_rar(rar_file_url, bucket_name):
                 destination_blob_name = f"garbage/{os.path.basename(garbage_jsonl)}"
                 upload_to_gcs(garbage_jsonl, bucket_name, destination_blob_name)
                 
-                # Check if the garbage JSONL file already exists on Hugging Face before uploading
-                if not check_huggingface_file_exists(HUGGING_FACE_REPO, os.path.basename(garbage_jsonl)):
-                    # Upload garbage JSONL to Hugging Face
-                    upload_to_huggingface(garbage_jsonl, HUGGING_FACE_REPO)
-                else:
-                    logger.info(f"Garbage JSONL file {os.path.basename(garbage_jsonl)} already exists on Hugging Face. Skipping upload.")
-                
+
             # Delete the local PDF file to save space after processing
             if os.path.exists(pdf_path):
                 os.remove(pdf_path)
