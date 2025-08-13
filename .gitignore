@@ -1,7 +1,9 @@
 # Ignore markdown and pdf files
-*.md
+
 *.pdf
 !CLAUDE.md
+!sfot_temp.md
+!technical_design_document.md
 
 # Ignore Kubernetes secrets
 kubernetes/huggingface-secret.yaml

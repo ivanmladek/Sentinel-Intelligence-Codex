@@ -1,18 +1,11 @@
-# World History Book Collection Processing Pipeline
+# World History Book Collection
 
 > [!NOTE]
 > The books and PDFs referenced in this library are not hosted in this repository. They are freely available for download from the following public resource:
 > 
 > https://the-eye.eu/public/Books/Bibliotheca%20Alexandrina/
 
-This project is a comprehensive pipeline for processing a curated collection of historical texts, offering a broad and deep exploration of human history from prehistory to the modern era. The pipeline is designed to extract, clean, and prepare text from PDF files for use in training large language models.
-
-> [!NOTE]
-> The processed dataset is available on Hugging Face at: https://huggingface.co/datasets/Disperser5601/Sentinel-Intelligence-Codex
-
-## Dataset Overview
-
-The collection is organized into a comprehensive set of categories, with a significant emphasis on ancient and classical civilizations, as well as detailed accounts of various historical periods and regions.
+This project is a curated collection of historical texts, offering a broad and deep exploration of human history from prehistory to the modern era. The library is organized into a comprehensive set of categories, with a significant emphasis on ancient and classical civilizations, as well as detailed accounts of various historical periods and regions.
 
 The collection is particularly strong in its coverage of **Prehistory** and **Ancient & Classical Civilizations**. The prehistory section delves into archaeology, the Bronze Age, the Iron Age, and the Neolithic period, providing a rich foundation in the early chapters of human history. The section on ancient and classical civilizations is extensive, with in-depth collections on:
 
@@ -34,57 +27,45 @@ The library is not limited to political and military history. It also includes s
 *   **Philosophy and Religion**: Exploring the intellectual and spiritual traditions of various cultures.
 *   **Science and Technology**: Charting the history of scientific discovery and technological innovation.
 
-## Pipeline Architecture
+The ten most important subjects, based on the number of books and depth of coverage, appear to be:
 
-The processing pipeline is designed to run on Google Cloud Platform (GCP) using Kubernetes (GKE) for scalable, parallel processing of the PDF files. The pipeline consists of the following components:
+1.  **Ancient & Classical Civilizations**: The most prominent subject, with extensive collections on Egypt, Greece, Rome, and Alexander the Great.
+2.  **Prehistory**: A deep dive into archaeology and the early stages of human civilization.
+3.  **Military History**: Covering a wide range of historical conflicts, from ancient warfare to modern-day battles.
+4.  **Medieval History**: With a strong focus on the Byzantine Empire, the Crusades, and European kingdoms.
+5.  **Modern History**: Encompassing World War I, World War II, and the Cold War.
+6.  **Regional Histories**: Detailed collections on the history of specific countries and regions, including Britain, China, and the Middle East.
+7.  **Art & Architecture**: Exploring the history of art and architecture across different cultures and periods.
+8.  **Philosophy & Religion**: A significant collection on the history of ideas and belief systems.
+9.  **Biographies**: In-depth accounts of key historical figures, from ancient rulers to modern leaders.
+10. **Archaeology**: With a focus on the methods and discoveries that have shaped our understanding of the past.
 
-### 1. Terraform Orchestration
+## Library Structure
 
-The infrastructure is managed using Terraform, which provisions the following resources:
+The library is organized into a hierarchical structure, with the following main categories:
 
-*   **GKE Cluster**: A Google Kubernetes Engine cluster for running the processing jobs.
-*   **GPU Node Pool**: A node pool with GPU instances for accelerated PDF processing.
-*   **Cloud Storage Bucket**: A bucket for storing the processed text data.
-*   **Artifact Registry**: A repository for storing the Docker images used in the pipeline.
+```
+.
+├── Prehistory
+├── Ancient & Classical Civilizations
+├── Medieval History
+├── Early Modern History
+├── Modern History
+├── Regional History
+├── Military History
+├── Art & Architecture
+├── Philosophy & Religion
+└── Science & Technology
+```
 
-### 2. GKE Cluster Setup
+## PDF Text Extraction and Processing
 
-The GKE cluster is configured with the following specifications:
-
-*   **Cluster Name**: `batch-inference-cluster`
-*   **Zone**: `us-central1-b`
-*   **Node Pool**: 
-    * **Machine Type**: `n1-standard-4`
-    * **Accelerator**: 4 x NVIDIA Tesla T4 GPUs
-    * **Preemptible**: Enabled for cost optimization
-
-### 3. Docker Containerization
-
-The processing logic is packaged in a Docker container that includes all necessary dependencies:
-
-*   **Base Image**: `nvidia/cuda:12.3.1-runtime-ubuntu22.04`
-*   **Dependencies**: 
-    * `nougat-ocr` for PDF text extraction
-    * `nltk` for natural language processing
-    * `langdetect` for language identification
-    * Various other Python libraries for text processing
-
-### 4. Parallel Processing with Kubernetes Jobs
-
-The processing is orchestrated using Kubernetes Jobs that:
-
-*   **Distribute Work**: Split the collection of PDF files across multiple pods for parallel processing
-*   **Scale**: Run multiple instances of the processing container based on the available GPU resources
-*   **Handle Failures**: Automatically restart failed pods to ensure completion of the processing
-
-## Processing Script (`parallel_process.py`)
-
-The core processing logic is implemented in `parallel_process.py`, which performs the following steps:
+The process of extracting, cleaning, and preparing the text from PDF files for the LLM is a multi-stage pipeline designed to ensure high-quality, structured data. This process is orchestrated by the `process_refactor.ipynb` notebook.
 
 ### 1. Environment Setup and PDF Discovery
 
-- **Dependencies**: The script uses `nougat-ocr` for text extraction, `nltk` for natural language processing, and `langdetect` for language identification.
-- **PDF Discovery**: The script recursively scans a specified URL to locate all RAR files containing PDFs.
+- **Dependencies**: The process begins by installing necessary Python libraries, including `nougat-ocr` for text extraction, `nltk` for natural language processing, and `langdetect` for language identification.
+- **PDF Discovery**: The script recursively scans a specified directory (e.g., a Google Drive folder) to locate all PDF files.
 
 ### 2. Text Extraction with Nougat
 
@@ -111,65 +92,3 @@ This is a critical step to filter out irrelevant or low-quality text.
     - These larger sections are then further divided into sentences using `nltk.sent_tokenize`.
 - **Size Constraints**: The sentences are grouped into chunks with a maximum size (e.g., 8192 characters) to ensure they fit within the model's context window, while avoiding splitting sentences in the middle.
 - **Final Output**: The cleaned, chunked text is saved to a `.jsonl` file, with each line containing a JSON object with a single "text" key, ready for training the LLM. Garbage text is saved to a separate file for review.
-
-## Deployment
-
-To deploy the pipeline:
-
-1. **Provision Infrastructure**: Run `terraform apply` in the `terraform` directory to create the GKE cluster and associated resources.
-2. **Build and Push Docker Image**: Build the processing container and push it to the Artifact Registry.
-3. **Deploy Kubernetes Job**: Apply the `gke_job.yaml` manifest to start the parallel processing job.
-
-## Hugging Face Integration
-
-The pipeline now includes integration with Hugging Face to automatically upload cleaned JSONL files to a dataset repository.
-
-### Setting up Hugging Face Secret
-
-Before deploying the job, you need to create a Kubernetes secret with your Hugging Face API token:
-
-1. Generate a Hugging Face API token from your [Hugging Face account settings](https://huggingface.co/settings/tokens)
-2. Create a Kubernetes secret with the token:
-   ```bash
-   echo -n 'YOUR_HUGGING_FACE_TOKEN' | base64
-   ```
-3. Update the `kubernetes/huggingface-secret.yaml` file with the base64-encoded token
-4. Apply the secret to your cluster:
-   ```bash
-   kubectl apply -f kubernetes/huggingface-secret.yaml
-   ```
-
-**Security Note**: The `kubernetes/huggingface-secret.yaml` file contains your Hugging Face API token and should never be committed to version control.
-The `.gitignore` file has been configured to exclude this file, but you should still be careful not to accidentally commit it.
-
-### Deploying the Updated Job
-
-After creating the secret, you can deploy the updated job:
-
-```bash
-kubectl apply -f gke_job.yaml
-```
-
-The pipeline is designed to be scalable and cost-effective, leveraging GCP's preemptible GPU instances and Kubernetes' orchestration capabilities to process large collections of PDF files efficiently.
-
-## Work Distribution
-
-The pipeline uses Kubernetes Jobs with `completionMode: Indexed` to distribute work among multiple pods. Each pod receives a unique index through the `JOB_COMPLETION_INDEX` environment variable, which is used to divide the list of RAR files among the pods. This ensures that each pod processes a different subset of RAR files, enabling efficient parallel processing.
-
-## Troubleshooting
-
-If you encounter issues with work distribution, ensure that:
-1. The `gke_job.yaml` file has `completionMode: Indexed` configured
-2. The job is recreated after making changes to the job configuration (as `completionMode` is immutable)
-3. Each pod has a unique `JOB_COMPLETION_INDEX` environment variable
-
-You can verify the `JOB_COMPLETION_INDEX` in each pod with:
-```bash
-kubectl exec <pod-name> -- printenv | grep JOB_COMPLETION_INDEX
-```
-
-You can check which RAR file each pod is processing by looking at the pod logs:
-```bash
-kubectl logs <pod-name> | grep "Processing"
-```
-
