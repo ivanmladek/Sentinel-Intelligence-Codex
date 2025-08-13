@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: text-classification-job
+spec:
+  parallelism: 1
+  completions: 1
+  template:
+    spec:
+      containers:
+      - name: text-classifier
+        image: us-central1-docker.pkg.dev/gdrive-410709/vllm-serving-repo/text-classifier:latest
+        env:
+        - name: HUGGING_FACE_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: huggingface-token
+              key: token
+        - name: DATASET_NAME
+          value: "ccdv/patent-classification"
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+      restartPolicy: OnFailure
+  backoffLimit: 5
