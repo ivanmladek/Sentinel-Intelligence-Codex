@@ -2,6 +2,7 @@
 
 *.pdf
 !CLAUDE.md
+!debugging.md
 !sfot_temp.md
 !technical_design_document.md
 
