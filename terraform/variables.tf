@@ -15,7 +15,7 @@ variable "region" {
 variable "gke_zone" {
   description = "The GCP zone for the GKE cluster."
   type        = string
-  default     = "us-central1-b"
+  default     = "us-central1-c"
 }
 
 variable "gcs_bucket_name" {
@@ -51,5 +51,5 @@ variable "gke_node_pool_accelerator_type" {
 variable "gke_node_pool_accelerator_count" {
   description = "The number of accelerators for the GKE node pool."
   type        = number
-  default     = 4
+  default     = 1
 }

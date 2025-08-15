@@ -29,4 +29,6 @@ spec:
           limits:
             nvidia.com/gpu: 1
       restartPolicy: OnFailure
+      imagePullSecrets:
+      - name: gcr-json-key
   backoffLimit: 100
