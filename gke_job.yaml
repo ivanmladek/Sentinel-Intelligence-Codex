@@ -25,10 +25,12 @@ spec:
               key: token
         - name: NUM_PODS
           value: "4"
-        - name: JOB_COMPLETION_INDEX
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
+        #When Kubernetes creates pods for an Indexed Job, it automatically sets the
+        #JOB_COMPLETION_INDEX environment variable in each container. 
+        #By removing the default value in the Python code, we ensure that:
+        #If the job is correctly configured as an Indexed Job, each pod will get its
+        #unique index. #If there's a configuration issue, the job will fail fast with
+        #a clear error. #We don't need to manually expose the variable through fieldRef
         resources:
           limits:
             nvidia.com/gpu: 1
