@@ -612,7 +612,7 @@ def main():
     random.shuffle(rar_files)
 
     # Distribute the work among the pods
-    pod_index = int(os.environ.get("JOB_COMPLETION_INDEX", 0))
+    pod_index = int(os.environ["JOB_COMPLETION_INDEX"])
     num_pods = int(os.environ.get("NUM_PODS", 1))
     files_per_pod = len(rar_files) // num_pods
     start_index = pod_index * files_per_pod

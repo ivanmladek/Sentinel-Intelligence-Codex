@@ -25,6 +25,10 @@ spec:
               key: token
         - name: NUM_PODS
           value: "4"
+        - name: JOB_COMPLETION_INDEX
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         resources:
           limits:
             nvidia.com/gpu: 1
