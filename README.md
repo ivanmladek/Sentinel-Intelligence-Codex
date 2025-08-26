@@ -5,6 +5,10 @@
 > 
 > https://the-eye.eu/public/Books/Bibliotheca%20Alexandrina/
 
+> [!NOTE]
+> The resultant cleaned json files are save on HuggingFace in 
+>https://huggingface.co/datasets/Disperser5601/Sentinel-Intelligence-Codex
+
 This project is a curated collection of historical texts, offering a broad and deep exploration of human history from prehistory to the modern era. The library is organized into a comprehensive set of categories, with a significant emphasis on ancient and classical civilizations, as well as detailed accounts of various historical periods and regions.
 
 The collection is particularly strong in its coverage of **Prehistory** and **Ancient & Classical Civilizations**. The prehistory section delves into archaeology, the Bronze Age, the Iron Age, and the Neolithic period, providing a rich foundation in the early chapters of human history. The section on ancient and classical civilizations is extensive, with in-depth collections on:
