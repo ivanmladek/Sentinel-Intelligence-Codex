@@ -1,12 +1,12 @@
 # World History Book Collection
 
 > [!NOTE]
-> The books and PDFs referenced in this library are not hosted in this repository. They are freely available for download from the following public resource:
+> The books and PDFs referenced in this library are ~NOT~ hosted in this repository. They are freely available for download from an unaffiliated 3rd party public resource:
 > 
 > https://the-eye.eu/public/Books/Bibliotheca%20Alexandrina/
 
 > [!NOTE]
-> The resultant cleaned json files are save on HuggingFace in 
+> The resultant cleaned json files are saved in HuggingFace 
 >https://huggingface.co/datasets/Disperser5601/Sentinel-Intelligence-Codex
 
 This project is a curated collection of historical texts, offering a broad and deep exploration of human history from prehistory to the modern era. The library is organized into a comprehensive set of categories, with a significant emphasis on ancient and classical civilizations, as well as detailed accounts of various historical periods and regions.
