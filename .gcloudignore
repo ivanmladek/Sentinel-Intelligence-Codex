@@ -1,0 +1,13 @@
+
+# This file tells gcloud to ignore certain files when uploading to Cloud Build.
+
+# Ignore the large model files, as they are not needed for the build.
+model_files/
+
+# Ignore other common files that are not needed for the build.
+.git/
+.DS_Store
+*.ipynb
+*.log
+*.pdf
+*.md~
