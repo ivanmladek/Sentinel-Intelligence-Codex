@@ -1,10 +1,15 @@
 # Ignore markdown and pdf files
 
 *.pdf
-!CLAUDE.md
-!debugging.md
-!sfot_temp.md
-!technical_design_document.md
+*.md
+!README.md
+
+# Ignore large data files
+files.txt
+
+# Ignore temporary files
+index.html
+__pycache__/
 
 # Ignore Kubernetes secrets
 kubernetes/huggingface-secret.yaml
