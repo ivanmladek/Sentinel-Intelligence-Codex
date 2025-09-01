@@ -5,7 +5,7 @@
 !README.md
 
 # Ignore large data files
-files.txt
+*.json
 
 # Ignore temporary files
 index.html
