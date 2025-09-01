@@ -10,6 +10,7 @@ files.txt
 # Ignore temporary files
 index.html
 __pycache__/
+*~
 
 # Ignore Kubernetes secrets
 kubernetes/huggingface-secret.yaml
